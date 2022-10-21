@@ -22,18 +22,18 @@ namespace SH
 
 
             foreach (var render in myRenderers)
-                render.materials[1].SetFloat("_Outline", 0f);
+                render.material.SetFloat("_Outline", 0f);
         }
 
         public virtual void HoverOn()
         {
             foreach (var render in myRenderers)
-                render.materials[1].SetFloat("_Outline", outlineWidth);
+                render.material.SetFloat("_Outline", outlineWidth);
         }
         public void HoverOff()
         {
             foreach (var render in myRenderers)
-                render.materials[1].SetFloat("_Outline", 0f);
+                render.material.SetFloat("_Outline", 0f);
         }
         public virtual void Interaction()
         {
@@ -50,8 +50,5 @@ namespace SH
             canvers.SetActive(false);
             this.transform.position = PreVector3;
         }
-
-        
     }
-
 }
