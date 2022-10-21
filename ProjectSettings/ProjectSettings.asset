@@ -269,7 +269,6 @@ PlayerSettings:
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
   m_BuildTargetIcons: []
-  m_BuildTargetPlatformIcons
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures: []
