@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 5623744710343680625}
   - component: {fileID: 5623744710344777905}
   - component: {fileID: 5623744710346946799}
-  - component: {fileID: 5623744710346946797}
   - component: {fileID: 3176150049453515519}
   - component: {fileID: 1825837193799164689}
-  - component: {fileID: 340637233621104620}
+  - component: {fileID: 7609713500840672165}
   m_Layer: 6
   m_Name: hammer
   m_TagString: Untagged
@@ -105,18 +104,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5623744710346946797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5623744710347046513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aec8553fe2fff0642a5e92f1dd371776, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3176150049453515519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +130,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.34435144, y: 0.03466969, z: 0.15532497}
   m_Center: {x: -0.0000009536743, y: -0.00000011920929, z: -0.000000018626453}
---- !u!114 &340637233621104620
+--- !u!114 &7609713500840672165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,8 +139,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5623744710347046513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b219722799d7c3640931f577bad6d7c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRenderers: []
-  interEffectOption: 0
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
