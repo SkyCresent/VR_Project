@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Button
+  - obj
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - obj1
+  - obj2
   - 
   - 
   - 
