@@ -11,6 +11,10 @@
 		Tags { "RenderType" = "Opaque" }
 		Cull front
 
+		Stencil {
+                Comp always
+            }
+
 		// Pass1
 		CGPROGRAM
 		#pragma surface surf NoLighting vertex:vert noshadow noambient
