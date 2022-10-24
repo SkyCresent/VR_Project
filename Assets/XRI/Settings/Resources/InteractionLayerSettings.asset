@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LayerNames:
   - Default
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+  - Hat
+  - Interactable Ignore Ray
+  - UI
   - 
   - 
   - 

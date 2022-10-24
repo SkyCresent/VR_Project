@@ -28,15 +28,15 @@ public class TimeLimit : MonoBehaviour
         {
             min = (int)setTime / 60;    //분은 남은시간을 60으로 나눠서 생긴 몫
             sec = (float)(Math.Truncate((setTime % 60) * 1) / 1);         //초는 남은시간을 60으로 나눠서 생긴 나머지
-            gameTimeUI.text = "남은 시간 : " + min + "분 " + sec + "초";
+            gameTimeUI.text =  min + "분 " + sec + "초";
         }
         if (setTime < 60)
         {
-            gameTimeUI.text = "남은 시간 : " + setTime + "초";
+            gameTimeUI.text = setTime + "초";
         }
         if (setTime <= 0)
         {
-            gameTimeUI.text = "남은 시간 : 0초";
+            gameTimeUI.text = "0초";
         }
     }
 }

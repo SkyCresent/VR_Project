@@ -12,29 +12,26 @@ public class CameraRayToInteraction : MonoBehaviour
         Interaction();
     }
 
-    private SH.Interactionable curObject;
+    private InteractionToRay curObject;
 
     private void Interaction()
     {
         RaycastHit hit;
 
-        Debug.DrawRay(transform.position, transform.forward * 5f, Color.red * 5f);
         if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, layerMask))
         {
-            SH.Interactionable targetObject = null;
-            if (!(targetObject = hit.transform.GetComponent<SH.Interactionable>()))
-                    return;
+            InteractionToRay targetObject = hit.transform.GetComponent<InteractionToRay>();
 
             if (targetObject == curObject)
                 return;
 
-            curObject?.HoverOff();
+            curObject?.InterationOff();
             curObject = targetObject;
-            curObject.HoverOn();
+            curObject.InterationOn();
         }
         else if(curObject)
         {
-             curObject.HoverOff();
+             curObject.InterationOff();
              curObject = null;
         }
     }
