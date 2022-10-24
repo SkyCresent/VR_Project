@@ -34,7 +34,8 @@
             o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
             o.Emission = _RimColor.rgb;
             float rim = saturate(dot(o.Normal, IN.viewDir));
-            rim = pow(1 - rim, 3) + pow(frac(IN.worldPos.y * 10 - _Time.y), 30);            
+            rim = pow(1 - rim, 3) + pow(frac(IN.worldPos.y * 10 - _Time.y), 30);
+            o.Alpha = rim;
         }
         ENDCG
     }
