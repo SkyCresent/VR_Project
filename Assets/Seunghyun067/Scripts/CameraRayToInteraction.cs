@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum HandObjectState { NON_OBJECT, OBJECT }
-public class CameraRayToInteraction : MonoBehaviour
+public class CameraRayToInteraction : SH.Singleton<CameraRayToInteraction>
 {
-    [SerializeField] Image imageA;
-    [SerializeField] Image imageX;
-    [SerializeField] Camera mainCam;
-    [SerializeField] Camera subCam;
+    [SerializeField] public Image imageA;
+    [SerializeField] public Image imageX;
+    [SerializeField] public Camera mainCam;
+    [SerializeField] public Camera subCam;
     [SerializeField] private Transform uiPoint;
 
     private HandObjectState curObjectState = HandObjectState.NON_OBJECT;
