@@ -11,6 +11,7 @@ public class BrokenWall : MonoBehaviour
     private float hp = 5;
     private int brokenWallIndex = 0;
 
+
     private void Awake()
     {
         foreach (var wall in browenWalls)
