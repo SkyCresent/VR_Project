@@ -6,22 +6,27 @@ public enum SafeButtonType { NUMBER, ENTER, DELETE }
 
 [RequireComponent(typeof(Animator))]
 
-public class SafeBox : MonoBehaviour
+public class SafeBox : SH.Interactionable
 {
+    [Header("SafeBox Option")]
     [SerializeField] private string passwordInput;
     [SerializeField] private LayerMask numberLayer;
     [SerializeField] private Mesh[] numberMeshs;
     [SerializeField] private List<MeshFilter> passwordMesh = new List<MeshFilter>();
     [SerializeField] private GameObject open;
     [SerializeField] private GameObject close;
+    [SerializeField] private Camera mainCam;
+    private Camera safeCam;
 
     private List<int> resultPassword = new List<int>();
     private List<int> curPassword = new List<int>();
 
     private Animator animator;
 
-    private void Awake()
+    new private void Awake()
     {
+        
+        base.Awake();
         foreach (var pass in passwordInput)
             resultPassword.Add(pass - '0');
 
@@ -35,34 +40,15 @@ public class SafeBox : MonoBehaviour
         foreach (var closeRender in close.GetComponentsInChildren<Renderer>())
             closeRender.material.color = Color.blue;
 
+        safeCam = GetComponentInChildren<Camera>();
+        safeCam.enabled = false;
+
 
     }
-
-    private void Update()
+    public override void Interaction()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, int.MaxValue, numberLayer))
-        {
-            SafeButton button = hit.transform.GetComponent<SafeButton>();
-
-            switch (button.ButtonType)
-            {
-                case SafeButtonType.NUMBER:
-                    Number(hit.transform.name[0] - '0');
-                    break;
-                case SafeButtonType.ENTER:
-                    Enter();
-                    break;
-                case SafeButtonType.DELETE:
-                    Delete();
-                    break;
-                default:
-                    break;
-            }
-        }
+        mainCam.enabled = false;
+        safeCam.enabled = true;
     }
 
     private void PrintPassword()
@@ -151,5 +137,43 @@ public class SafeBox : MonoBehaviour
         curPassword.Clear();
         foreach (var pass in passwordMesh)
             pass.mesh = null;
+    }
+
+    public override void UnInteraction()
+    {
+        mainCam.enabled = true;
+        safeCam.enabled = false;
+    }
+
+    public override bool InteractionUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+            return false;
+
+        if (!Input.GetMouseButtonDown(0))
+            return true;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit, int.MaxValue, numberLayer))
+        {
+            SafeButton button = hit.transform.GetComponent<SafeButton>();
+
+            switch (button.ButtonType)
+            {
+                case SafeButtonType.NUMBER:
+                    Number(hit.transform.name[0] - '0');
+                    break;
+                case SafeButtonType.ENTER:
+                    Enter();
+                    break;
+                case SafeButtonType.DELETE:
+                    Delete();
+                    break;
+                default:
+                    break;
+            }
+        }
+        return true;
     }
 }

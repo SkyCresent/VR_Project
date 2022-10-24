@@ -6,11 +6,11 @@ public class BrokenWall : MonoBehaviour
 {
     [SerializeField] private List<GameObject> browenWalls = new List<GameObject>();
     private List<Rigidbody> brownWallRigids = new List<Rigidbody>();
-    [SerializeField] private GameObject Wall;
+    [SerializeField] private GameObject wall;
     [SerializeField] private GameObject helpCube;
-    private float hp = 5;
+    [SerializeField] private GameObject planeX;
+    [SerializeField] private BoxCollider[] aroundWallColls;
     private int brokenWallIndex = 0;
-
 
     private void Awake()
     {
@@ -25,48 +25,44 @@ public class BrokenWall : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            if (browenWalls.Count == brokenWallIndex)
-            {
-                Break();
-                return;
-            }
-
-            for (int i = 0; i < 2; ++i, ++brokenWallIndex)
-                browenWalls[brokenWallIndex].transform.gameObject.SetActive(true);
-            Debug.Log(hp);
+            Hit();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.name.Equals("hammer")) return;
-        hp--;
-        if (hp == 0)
-            Break(); 
-        Debug.Log(hp);
+        if (!other.name.Equals("HitCollider"))
+            return;
+
+        Hit();
     }
     public void Break()
     {
-        Wall.GetComponent<MeshRenderer>().enabled = false;
+        foreach (var coll in aroundWallColls)
+            coll.isTrigger = true;
+        wall.GetComponent<MeshRenderer>().enabled = false;
+        planeX.SetActive(false);
         foreach (var rb in brownWallRigids)
             rb.isKinematic = false;
-        //StartCoroutine(HelpCube());
     }
 
-    IEnumerator HelpCube()
+    IEnumerator AroundWallOn()
     {
-        float time = 0.3f;
-        float scaleX = helpCube.transform.localScale.x;
-        while (time > 0f)
-        {
-            time -= Time.deltaTime;
-            helpCube.transform.localScale = new Vector3(scaleX += Time.deltaTime * 20f, helpCube.transform.localScale.y, helpCube.transform.localScale.z);
-            yield return null;
-        }
-        Destroy(helpCube.gameObject);
-        foreach (var rb in browenWalls)
-            Destroy(rb);
+        yield return new WaitForSeconds(0.5f);
+        foreach (var coll in aroundWallColls)
+            coll.isTrigger = false;
     }
 
+    private void Hit()
+    {
+        if (browenWalls.Count == brokenWallIndex)
+        {
+            Break();
+            return;
+        }
+
+        for (int i = 0; i < 2; ++i, ++brokenWallIndex)
+            browenWalls[brokenWallIndex].transform.gameObject.SetActive(true);
+    }
 
 }

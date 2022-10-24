@@ -72,6 +72,8 @@
 
 		fixed4 LightingNoLighting(SurfaceOutput s, fixed3 lightDir, fixed atten)
 		{
+			if (_Outline <= 0) discard;
+
 			return _OutlineColor;
 		}
 		ENDCG
