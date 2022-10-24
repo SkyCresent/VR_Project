@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25cf3e23f3a18024a82b76816bfc4c55, type: 2}
+  - {fileID: 2100000, guid: 4208e96138cf79b48be11b9d336276ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25cf3e23f3a18024a82b76816bfc4c55, type: 2}
+  - {fileID: 2100000, guid: 4208e96138cf79b48be11b9d336276ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,8 +175,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3882688348078994169}
-  - component: {fileID: 3882688348078994171}
-  - component: {fileID: 3882688348078994170}
+  - component: {fileID: 414919608697278813}
+  - component: {fileID: -3107499356215345494}
+  - component: {fileID: 6050453661212570627}
+  - component: {fileID: 3857212296535411382}
   m_Layer: 6
   m_Name: PaintA
   m_TagString: Untagged
@@ -201,7 +203,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3882688348078994171
+--- !u!65 &414919608697278813
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,9 +214,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3882688348078994170
+  m_Size: {x: 1.52, y: 2.06, z: 1.54}
+  m_Center: {x: 0, y: 0.93, z: 0}
+--- !u!114 &-3107499356215345494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,9 +225,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 4515356531972876355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62ed6afb232ff1541a9c5bea80c4ff3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d939eb3553ad7f4f9b2ec5d199a4474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvers: {fileID: 0}
   myRenderers: []
   outlineWidth: 0.00054
+  outlineOverWidth: 1
+--- !u!114 &6050453661212570627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4515356531972876355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea62ab9e09cdec44a7510d8be3d415d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3857212296535411382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4515356531972876355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80fda5d165df21047a83141423be6b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
