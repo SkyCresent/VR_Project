@@ -40,29 +40,29 @@ public class SafeBox : MonoBehaviour
 
     private void Update()
     {
-        //if (!Input.GetMouseButtonDown(0)) return;
-        //
-        //RaycastHit hit;
-        //
-        //if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, int.MaxValue, numberLayer))
-        //{
-        //    SafeButton button = hit.transform.GetComponent<SafeButton>();
-        //
-        //    switch (button.ButtonType)
-        //    {
-        //        case SafeButtonType.NUMBER:
-        //            Number(hit.transform.name[0] - '0');
-        //            break;
-        //        case SafeButtonType.ENTER:
-        //            Enter();
-        //            break;
-        //        case SafeButtonType.DELETE:
-        //            Delete();
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        if (!Input.GetMouseButtonDown(0)) return;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, int.MaxValue, numberLayer))
+        {
+            SafeButton button = hit.transform.GetComponent<SafeButton>();
+
+            switch (button.ButtonType)
+            {
+                case SafeButtonType.NUMBER:
+                    Number(hit.transform.name[0] - '0');
+                    break;
+                case SafeButtonType.ENTER:
+                    Enter();
+                    break;
+                case SafeButtonType.DELETE:
+                    Delete();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void PrintPassword()
