@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed2fd91ef1540b74c8692b89d9a5a159, type: 2}
+  - {fileID: 2100000, guid: 2405cb1d09b32094dac4cd4d8c42e1ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a28960b962878484eb93a5bbc61185ca, type: 2}
+  - {fileID: 2100000, guid: 8dea775f25119c547a6f2c31fd53ce12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,7 +176,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3666521195018467887}
   - component: {fileID: 3666521195018467885}
-  - component: {fileID: 3666521195018467884}
+  - component: {fileID: -6887878632232723023}
+  - component: {fileID: -1942648999734121554}
+  - component: {fileID: 7276274427640184246}
   m_Layer: 6
   m_Name: PaintC
   m_TagString: Untagged
@@ -212,9 +214,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3666521195018467884
+  m_Size: {x: 1.18, y: 1.9, z: 1.16}
+  m_Center: {x: 0, y: 0.92, z: 0}
+--- !u!114 &-6887878632232723023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,9 +225,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 4155073362109161621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62ed6afb232ff1541a9c5bea80c4ff3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d939eb3553ad7f4f9b2ec5d199a4474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvers: {fileID: 0}
   myRenderers: []
   outlineWidth: 0.00054
+  outlineOverWidth: 1
+--- !u!114 &-1942648999734121554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4155073362109161621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea62ab9e09cdec44a7510d8be3d415d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7276274427640184246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4155073362109161621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80fda5d165df21047a83141423be6b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
