@@ -6,11 +6,11 @@ public class HammerAttack : MonoBehaviour
 {
     public float atk = 10f;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.GetComponent<IInteractions>() != null)
+        if(other.GetComponent<IInteractions>() != null)
         {
-            collision.transform.GetComponent<IInteractions>().TakeHit(atk);
+            other.GetComponent<IInteractions>().TakeHit(atk);
         }
     }
 }
