@@ -1,15 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+
 using System.Reflection;
 
 
 
 public class Item : MonoBehaviour
 {
-    private ItemOption option;    
+    private ItemOption option;
+    private XRGrabInteractable grabInter;
 
     private Dictionary<ItemOption, ItemComponent> itemComponents = new Dictionary<ItemOption, ItemComponent>();
+
+    private void Awake()
+    {
+        grabInter = GetComponent<XRGrabInteractable>();
+    }
+
+    private void Start()
+    {
+        //grabInter?.hoverEntered.AddListener((HoverEnterEventArgs) => ((Hoverable)itemComponents[ItemOption.HOVER]).HoverOn());
+        //grabInter?.hoverExited.AddListener((HoverEnterEventArgs) => ((Hoverable)itemComponents[ItemOption.HOVER]).HoverOff());
+    }
 
     public void AddItemComponent(ItemOption _option, ItemComponent com)
     {

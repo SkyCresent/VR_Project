@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08010758, g: 0.089420386, b: 0.10301671, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2318,7 +2317,6 @@ Transform:
   - {fileID: 773605287}
   - {fileID: 259709905}
   - {fileID: 1678779029}
-  - {fileID: 1162238951}
   m_Father: {fileID: 1807273559}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3386,9 +3384,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 1162238951}
     m_Modifications:
     - target: {fileID: 382485418, guid: 208796103c19c284fb7a8156430dec38, type: 3}
+      propertyPath: m_AttachTransform
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 382485418, guid: 208796103c19c284fb7a8156430dec38, type: 3}
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1080185800}
+    - target: {fileID: 382485418, guid: 208796103c19c284fb7a8156430dec38, type: 3}
+      propertyPath: m_StartingSelectedInteractable
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 382485418, guid: 208796103c19c284fb7a8156430dec38, type: 3}
+      propertyPath: m_InteractableHoverMeshMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382646025638591213, guid: 208796103c19c284fb7a8156430dec38, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6633522338415820212, guid: 208796103c19c284fb7a8156430dec38, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -3403,7 +3417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7115695837337798009, guid: 208796103c19c284fb7a8156430dec38, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7605408813303111619, guid: 208796103c19c284fb7a8156430dec38, type: 3}
       propertyPath: m_RootOrder
@@ -4697,7 +4711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1162238951
 Transform:
   m_ObjectHideFlags: 0
@@ -4706,14 +4720,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162238950}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.584, y: 1.315, z: -11.847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 257278532}
   - {fileID: 745411247}
-  m_Father: {fileID: 482924227}
-  m_RootOrder: 5
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1177727168
 PrefabInstance:
@@ -7049,7 +7063,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: -0.22, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1807273558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7066,7 +7080,7 @@ MonoBehaviour:
   m_OriginBaseGameObject: {fileID: 1807273555}
   m_CameraFloorOffsetObject: {fileID: 482924226}
   m_RequestedTrackingOriginMode: 0
-  m_CameraYOffset: 2
+  m_CameraYOffset: 8
 --- !u!4 &1807273559
 Transform:
   m_ObjectHideFlags: 0
@@ -7075,13 +7089,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807273555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.584, y: 1.815, z: -12.251}
+  m_LocalPosition: {x: 2.584, y: 1.259, z: -12.251}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 482924227}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1849511013
 PrefabInstance:
