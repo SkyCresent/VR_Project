@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+
+
 
 public enum HandObjectState { NON_OBJECT, OBJECT }
-public class CameraRayToInteraction : SH.Singleton<CameraRayToInteraction>
+public class CameraRayToInteraction : MonoBehaviour
 {
+    [SerializeField] private LineRenderer line;
+    [SerializeField] private GameObject controller;
     [SerializeField] public Image imageA;
     [SerializeField] public Image imageX;
-    [SerializeField] public Camera mainCam;
-    [SerializeField] public Camera subCam;
+    // [SerializeField] public Camera mainCam;
+    // [SerializeField] public Camera subCam;
     [SerializeField] private Transform uiPoint;
 
     private HandObjectState curObjectState = HandObjectState.NON_OBJECT;
@@ -32,8 +38,10 @@ public class CameraRayToInteraction : SH.Singleton<CameraRayToInteraction>
     {
         imageA.enabled = false;
         imageX.enabled = false;
-        mainCam.enabled = true;
-        subCam.enabled = false;
+        // mainCam.enabled = true;
+        // subCam.enabled = false;
+
+        
     }
     private void Update()
     {
@@ -43,25 +51,30 @@ public class CameraRayToInteraction : SH.Singleton<CameraRayToInteraction>
     }
     void SetPosition()
     {
-        subCam.transform.position = mainCam.transform.position;
-        subCam.transform.rotation = Quaternion.Euler(mainCam.transform.rotation.eulerAngles.x, mainCam.transform.rotation.eulerAngles.y, mainCam.transform.rotation.eulerAngles.z);
-        transform.position = mainCam.transform.position;
-        transform.rotation = mainCam.transform.rotation;
-
-        Vector3 position = subCam.transform.position;
-        position.y -= 0.5f;
-        Vector3 dir = subCam.transform.forward;
-        dir.y = 0;
-        uiPoint.position = position + dir;
+        // subCam.transform.position = mainCam.transform.position;
+        // subCam.transform.rotation = Quaternion.Euler(mainCam.transform.rotation.eulerAngles.x, mainCam.transform.rotation.eulerAngles.y, mainCam.transform.rotation.eulerAngles.z);
+        // transform.position = mainCam.transform.position;
+        // transform.rotation = mainCam.transform.rotation;
+        // 
+        // Vector3 position = subCam.transform.position;
+        // position.y -= 0.5f;
+        // Vector3 dir = subCam.transform.forward;
+        // dir.y = 0;
+        //uiPoint.position = position + dir;
     }
 
 
     private void RaycastInteraction()
     {
+        if (curObject)
+            Debug.Log(curObject.name);
         // 레이는 항상 쏨.
-        Physics.Raycast(transform.position, transform.forward, out hit, 5f);
+        Physics.Raycast(controller.transform.position, controller.transform.forward, out hit, 1);
 
-        Debug.DrawRay(transform.position, transform.forward * 5f, Color.red);
+        
+        line.SetPosition(0, controller.transform.position);
+        line.SetPosition(1, controller.transform.position + controller.transform.forward);
+
 
         // 타겟을 정해줌.
         SetHoverObject();
@@ -72,6 +85,11 @@ public class CameraRayToInteraction : SH.Singleton<CameraRayToInteraction>
         // 타겟과의 상호작용.
         Interaction();
 
+        TestInput();
+    }
+
+    void TestInput()
+    {
 
     }
 
@@ -117,9 +135,15 @@ public class CameraRayToInteraction : SH.Singleton<CameraRayToInteraction>
         // 클로즈업 가능한가?
         imageA.enabled = curObject.IsOption(ItemOption.CLOSEUP);
 
+        if(curObject.IsOption(ItemOption.INTERACTION))
+            Debug.Log("Option");
+
+        
+
         // 키를 눌러서 상호작용
-        if (curObject.IsOption(ItemOption.INTERACTION) && curObject && Input.GetMouseButtonUp(0))
+        if (curObject.IsOption(ItemOption.INTERACTION) && curObject && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
         {
+            Debug.Log("asd");
             curObject?.GetItemComponent<Hoverable>().HoverOff();
             curObject.GetItemComponent<SH.Interactionable>().Interaction();
             isInteracting = true;
@@ -186,13 +210,13 @@ public class CameraRayToInteraction : SH.Singleton<CameraRayToInteraction>
 
     public void MainView()
     {
-        mainCam.enabled = false;
-        subCam.enabled = true;
+        // mainCam.enabled = false;
+        // subCam.enabled = true;
     }
     public void SubView()
     {
-        mainCam.enabled = true;
-        subCam.enabled = false;
+        // mainCam.enabled = true;
+        // subCam.enabled = false;
     }
 
     void ObjectCreate()

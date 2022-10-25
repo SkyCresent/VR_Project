@@ -23,10 +23,10 @@ public class BrokenWall : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Hit();
-        }
+        // if (Input.GetKeyDown(KeyCode.V))
+        // {
+        //     Hit();
+        // }
     }
 
     private void OnTriggerEnter(Collider other)
