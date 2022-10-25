@@ -6,6 +6,8 @@ public class Wall : MonoBehaviour, IInteractions
 {
     [SerializeField]
     private GameObject fragments;
+    [SerializeField]
+    private MeshRenderer meshRenderer;
 
     private float hp;
     public float Hp 
@@ -28,7 +30,9 @@ public class Wall : MonoBehaviour, IInteractions
         Debug.Log(hp);
         if (hp <= 0)
         {
+            meshRenderer.enabled = false;
             fragments.SetActive(true);
+            Destroy(gameObject, 5f);
         }
     }
 

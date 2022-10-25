@@ -60,19 +60,19 @@
     // "RenderType" = "Transparent"
 	//}
 
-    Pass 
-	{
-		Cull Off
-		ZTest [_ZTest]
-		ZWrite Off
-		ColorMask 0
-
-		Stencil 
+		Pass 
 		{
-			Ref [_Ref]
-			Pass Replace
+			Cull Off
+			ZTest [_ZTest]
+			ZWrite Off
+			ColorMask 0
+
+			Stencil 
+			{
+				Ref [_Ref]
+				Pass Replace
+			}
 		}
-    }
 
 		ZWrite Off
 		ZTest Always
@@ -108,7 +108,7 @@
 
 		fixed4 LightingNoLighting(SurfaceOutput s, fixed3 lightDir, fixed atten)
 		{			
-			if(_Outline < 0.001f) discard;
+			if(_Outline <=0) discard;
 			return _OutlineColor;
 		}
 		ENDCG
