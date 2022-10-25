@@ -13,6 +13,7 @@ public class ChangeScene : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");   // 게임 씬 이름 설정
     }
+    
 
     public void OpenOption()
     {
@@ -20,6 +21,7 @@ public class ChangeScene : MonoBehaviour
         opt.SetActive(true);
     }
 
+   
     public void CloseOption()
     {
         opt.SetActive(false);
@@ -30,4 +32,6 @@ public class ChangeScene : MonoBehaviour
     {
         Application.Quit();
     }
+
+  
 }
