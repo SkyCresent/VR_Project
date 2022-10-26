@@ -12,7 +12,7 @@ public class Watch : SH.Interactionable
     private new void Awake()
     {
         base.Init(ItemOption.INTERACTION);
-        watchUI.SetActive(false);
+        //watchUI.SetActive(false);
     }
 
     public override void Interaction()
