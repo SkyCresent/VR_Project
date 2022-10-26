@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BigSwitchInter : SH.Interactionable
-{
+{ 
     public override void Interaction()
     {
         GimmickManager.Instance.ElecEnable();

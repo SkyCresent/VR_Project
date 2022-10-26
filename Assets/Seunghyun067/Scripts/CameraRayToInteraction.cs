@@ -11,7 +11,7 @@ public enum HandObjectState { NON_OBJECT, OBJECT }
 public class CameraRayToInteraction : MonoBehaviour
 {
     [SerializeField] private LineRenderer line;
-    
+    [SerializeField] private GameObject controller;
     [SerializeField] public Image imageA;
     [SerializeField] public Image imageX;
     [SerializeField] public Camera mainCam;
@@ -51,13 +51,15 @@ public class CameraRayToInteraction : MonoBehaviour
     }
     void SetPosition()
     {
-        //subCam.transform.position = mainCam.transform.position;
-        //subCam.transform.rotation = Quaternion.Euler(mainCam.transform.rotation.eulerAngles.x, mainCam.transform.rotation.eulerAngles.y, mainCam.transform.rotation.eulerAngles.z);
-        //
-        //Vector3 position = subCam.transform.position;
-        //position.y -= 0.5f;
-        //Vector3 dir = subCam.transform.forward;
-        //dir.y = 0;
+        // subCam.transform.position = mainCam.transform.position;
+        // subCam.transform.rotation = Quaternion.Euler(mainCam.transform.rotation.eulerAngles.x, mainCam.transform.rotation.eulerAngles.y, mainCam.transform.rotation.eulerAngles.z);
+        // transform.position = mainCam.transform.position;
+        // transform.rotation = mainCam.transform.rotation;
+        // 
+        // Vector3 position = subCam.transform.position;
+        // position.y -= 0.5f;
+        // Vector3 dir = subCam.transform.forward;
+        // dir.y = 0;
         //uiPoint.position = position + dir;
     }
 
@@ -67,11 +69,11 @@ public class CameraRayToInteraction : MonoBehaviour
         if (curObject)
             Debug.Log(curObject.name);
         // 레이는 항상 쏨.
-        Physics.Raycast(GimmickManager.Instance.controller.transform.position, GimmickManager.Instance.controller.transform.forward, out hit, 1);
+        Physics.Raycast(controller.transform.position, controller.transform.forward, out hit, 1);
 
         
-        line.SetPosition(0, GimmickManager.Instance.controller.transform.position);
-        line.SetPosition(1, GimmickManager.Instance.controller.transform.position + GimmickManager.Instance.controller.transform.forward);
+        line.SetPosition(0, controller.transform.position);
+        line.SetPosition(1, controller.transform.position + controller.transform.forward);
 
 
         // 타겟을 정해줌.
@@ -136,13 +138,14 @@ public class CameraRayToInteraction : MonoBehaviour
         // 키를 눌러서 상호작용
         if (curObject.IsOption(ItemOption.INTERACTION) && curObject && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
         {
+            Debug.Log("asd");
             curObject?.GetItemComponent<Hoverable>().HoverOff();
             curObject.GetItemComponent<SH.Interactionable>().Interaction();
             isInteracting = true;
         }
 
         // 키를 눌러서 클로즈업.
-        if (imageA.enabled == true && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
+        if (imageA.enabled == true && Input.GetKeyDown(KeyCode.A))
         {
             curObject?.GetItemComponent<Hoverable>().HoverOff();
             curObject.GetItemComponent<CloseUpable>().CloseUp();
@@ -175,7 +178,7 @@ public class CameraRayToInteraction : MonoBehaviour
             curObject.GetItemComponent<CloseUpable>().CloseUp();
 
             // X키를 누르면 클로즈업 종료.
-            if (XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.secondaryButton))
+            if (Input.GetKeyDown(KeyCode.X))
             {
                 curObject.GetItemComponent<CloseUpable>().UnCloseUp();
                 InteractionEnd();
@@ -185,7 +188,8 @@ public class CameraRayToInteraction : MonoBehaviour
     }
 
     private void InteractionEnd()
-    {        
+    {
+        
         SubView();
         Destroy(curUIObject);
         curUIObject = null;
