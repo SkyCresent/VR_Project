@@ -27,6 +27,7 @@ public class SafeBox : SH.Interactionable
     {
         
         base.Awake();
+       
         foreach (var pass in passwordInput)
             resultPassword.Add(pass - '0');
 
@@ -47,6 +48,19 @@ public class SafeBox : SH.Interactionable
     }
     public override void Interaction()
     {
+        GimmickManager.Instance.L_LineOnOff(true);
+        GetComponent<BoxCollider>().enabled = false;
+        Debug.Log("금고시작");
+        mainCam.enabled = false;
+        safeCam.enabled = true;
+    }
+
+    public override void UnInteraction()
+    {
+        GimmickManager.Instance.L_LineOnOff(false);
+        GetComponent<BoxCollider>().enabled = true;
+        Debug.Log("금고끝");
+        GetComponent<Item>().DeleteOption(ItemOption.INTERACTION);
         mainCam.enabled = false;
         safeCam.enabled = true;
     }
@@ -139,11 +153,6 @@ public class SafeBox : SH.Interactionable
             pass.mesh = null;
     }
 
-    public override void UnInteraction()
-    {
-        mainCam.enabled = true;
-        safeCam.enabled = false;
-    }
 
     public override bool InteractionUpdate()
     {
