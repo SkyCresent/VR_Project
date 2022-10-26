@@ -20,4 +20,18 @@ public class XRInput : SH.Singleton<XRInput>
 
         return false;
     }
+
+
+    private bool Up;
+    public bool GetKeyDown(ControllerType type, InputFeatureUsage<bool> usage)
+    {
+        XRController xrController = type == ControllerType.LEFT ? leftController : rightController;
+
+        if (xrController.inputDevice.TryGetFeatureValue(usage, out bool primaryButtonValueA))
+        {
+            return primaryButtonValueA;
+        }
+
+        return false;
+    }
 }

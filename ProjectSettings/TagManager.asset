@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Button
   - obj
+  - RoomLight
   layers:
   - Default
   - TransparentFX
@@ -22,9 +23,9 @@ TagManager:
   - obj2
   - 
   - 
-  - 
-  - 
-  - 
+  - Wall
+  - BrokenWall
+  - Safe
   - 
   - 
   - 
