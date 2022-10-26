@@ -14,6 +14,7 @@ public class CameraRayToInteraction : MonoBehaviour
     [SerializeField] private GameObject controller;
     [SerializeField] public Image imageA;
     [SerializeField] public Image imageX;
+    [SerializeField] public Image handImage;
     [SerializeField] public Camera mainCam;
     [SerializeField] public Camera subCam;
     [SerializeField] private Transform uiPoint;
@@ -38,10 +39,11 @@ public class CameraRayToInteraction : MonoBehaviour
     {
         imageA.enabled = false;
         imageX.enabled = false;
+        //handImage.enabled = false;
         mainCam.enabled = true;
         subCam.enabled = false;
 
-        
+
     }
     private void Update()
     {
@@ -71,7 +73,7 @@ public class CameraRayToInteraction : MonoBehaviour
         // 레이는 항상 쏨.
         Physics.Raycast(controller.transform.position, controller.transform.forward, out hit, 1);
 
-        
+
         line.SetPosition(0, controller.transform.position);
         line.SetPosition(1, controller.transform.position + controller.transform.forward);
 
@@ -100,10 +102,10 @@ public class CameraRayToInteraction : MonoBehaviour
         if (isCloseUping || isInteracting || curObjectState == HandObjectState.OBJECT)
             return;
 
-        if (!hit.transform || hit.transform.gameObject.layer 
+        if (!hit.transform || hit.transform.gameObject.layer
             != LayerMask.NameToLayer(GimmickManager.Instance.TargetLayerName))
         {
-            
+
             curObject?.GetItemComponent<Hoverable>().HoverOff();
             curObject = null;
             return;
@@ -128,12 +130,21 @@ public class CameraRayToInteraction : MonoBehaviour
 
     void InteractionAndCloseUpKeyDown()
     {
+
+        if (isCloseUping)
+            return;
+  
         // 타겟이 없거나 이미 상호작용 중이면 들어오지 않음.
         if (!(imageA.enabled = (curObject || isCloseUping || isInteracting)))
             return;
 
         // 클로즈업 가능한가?
         imageA.enabled = curObject.IsOption(ItemOption.CLOSEUP);
+
+        if (curObject.IsOption(ItemOption.INTERACTION))
+            Debug.Log("Option");
+
+
 
         // 키를 눌러서 상호작용
         if (curObject.IsOption(ItemOption.INTERACTION) && curObject && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
@@ -145,7 +156,7 @@ public class CameraRayToInteraction : MonoBehaviour
         }
 
         // 키를 눌러서 클로즈업.
-        if (imageA.enabled == true && Input.GetKeyDown(KeyCode.A))
+        if (imageA.enabled == true && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
         {
             curObject?.GetItemComponent<Hoverable>().HoverOff();
             curObject.GetItemComponent<CloseUpable>().CloseUp();
@@ -161,7 +172,7 @@ public class CameraRayToInteraction : MonoBehaviour
     {
         // 상호작용 진행 중..
         if (isInteracting)
-        {        
+        {
             isInteracting = curObject.GetItemComponent<SH.Interactionable>().InteractionUpdate();
 
             // 내부에서 끝나거나 키를 누르면 상호작용 종료
@@ -178,7 +189,7 @@ public class CameraRayToInteraction : MonoBehaviour
             curObject.GetItemComponent<CloseUpable>().CloseUp();
 
             // X키를 누르면 클로즈업 종료.
-            if (Input.GetKeyDown(KeyCode.X))
+            if (XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.secondaryButton))
             {
                 curObject.GetItemComponent<CloseUpable>().UnCloseUp();
                 InteractionEnd();
@@ -189,7 +200,7 @@ public class CameraRayToInteraction : MonoBehaviour
 
     private void InteractionEnd()
     {
-        
+
         SubView();
         Destroy(curUIObject);
         curUIObject = null;
@@ -205,29 +216,26 @@ public class CameraRayToInteraction : MonoBehaviour
 
     public void MainView()
     {
-         mainCam.enabled = false;
-         subCam.enabled = true;
+        mainCam.enabled = false;
+        subCam.enabled = true;
     }
     public void SubView()
     {
-         mainCam.enabled = true;
-         subCam.enabled = false;
+        mainCam.enabled = true;
+        subCam.enabled = false;
     }
 
     void ObjectCreate()
     {
-        Vector3 pos = subCam.transform.position;
-        Vector3 dir = subCam.transform.forward;
-        curUIObject = Instantiate(curObject.gameObject, uiPoint.position, uiPoint.rotation);
-        dir.y = 0;
-        pos += dir * 1f;
- 
+        curUIObject = Instantiate(curObject.transform.gameObject, uiPoint.position, uiPoint.rotation);
+        curUIObject.AddComponent<ObjectRotate>();
+
         //if (curObject.CloseUpLayer >= 0)
         //    curUIObject.layer = curObject.CloseUpLayer;
         //else
         //    Debug.LogError(curObject.name + "의 CloseUpLayer 테그가 현재 레이어 태그에 없습니다");
-        
-        
+
+
         if (curUIObject.GetComponent<Rigidbody>())
             curUIObject.GetComponent<Rigidbody>().useGravity = false;
     }

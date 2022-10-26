@@ -44,7 +44,7 @@ public class CloseUpable : ItemComponent, ICloseUp
 
     public virtual void UnCloseUp()
     {
-        UIObject.SetActive(false);
+        //UIObject.SetActive(false);
     }
 
     public virtual void CloseUpUpdate()

@@ -27,10 +27,7 @@ public class SafeBox : SH.Interactionable
     {
         
         base.Awake();
-        Camera[] temps = FindObjectsOfType<Camera>();
-
-        foreach (var current in temps)
-            Debug.Log(current.name);
+       
         foreach (var pass in passwordInput)
             resultPassword.Add(pass - '0');
 
@@ -51,7 +48,7 @@ public class SafeBox : SH.Interactionable
     }
     public override void Interaction()
     {
-        GimmickManager.Instance.LineOnOff(true);
+        GimmickManager.Instance.L_LineOnOff(true);
         GetComponent<BoxCollider>().enabled = false;
         Debug.Log("금고시작");
         mainCam.enabled = false;
@@ -60,7 +57,7 @@ public class SafeBox : SH.Interactionable
 
     public override void UnInteraction()
     {
-        GimmickManager.Instance.LineOnOff(false);
+        GimmickManager.Instance.L_LineOnOff(false);
         GetComponent<BoxCollider>().enabled = true;
         Debug.Log("금고끝");
         GetComponent<Item>().DeleteOption(ItemOption.INTERACTION);
@@ -156,11 +153,6 @@ public class SafeBox : SH.Interactionable
             pass.mesh = null;
     }
 
-    public override void UnInteraction()
-    {
-        mainCam.enabled = true;
-        safeCam.enabled = false;
-    }
 
     public override bool InteractionUpdate()
     {

@@ -9,10 +9,11 @@ public class XRInput : SH.Singleton<XRInput>
     [SerializeField] XRController leftController;
     [SerializeField] XRController rightController;
 
+    public XRController LeftController { get => leftController; }
+
     public bool GetKey(ControllerType type, InputFeatureUsage<bool> usage)
     {
         XRController xrController = type == ControllerType.LEFT ? leftController : rightController;
-
         if (xrController.inputDevice.TryGetFeatureValue(usage, out bool primaryButtonValueA))
         {
             return primaryButtonValueA;
