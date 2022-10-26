@@ -52,6 +52,8 @@ public class SafeBox : SH.Interactionable
         GimmickManager.Instance.LineOnOff(true);
         GetComponent<BoxCollider>().enabled = false;
         Debug.Log("금고시작");
+        mainCam.enabled = false;
+        safeCam.enabled = true;
     }
 
     public override void UnInteraction()
@@ -60,6 +62,8 @@ public class SafeBox : SH.Interactionable
         GetComponent<BoxCollider>().enabled = true;
         Debug.Log("금고끝");
         GetComponent<Item>().DeleteOption(ItemOption.INTERACTION);
+        mainCam.enabled = false;
+        safeCam.enabled = true;
     }
 
     private void PrintPassword()

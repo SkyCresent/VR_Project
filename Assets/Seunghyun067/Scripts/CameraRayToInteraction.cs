@@ -133,8 +133,6 @@ public class CameraRayToInteraction : MonoBehaviour
         // 클로즈업 가능한가?
         imageA.enabled = curObject.IsOption(ItemOption.CLOSEUP);
 
-        
-
         // 키를 눌러서 상호작용
         if (curObject.IsOption(ItemOption.INTERACTION) && curObject && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
         {
@@ -214,16 +212,6 @@ public class CameraRayToInteraction : MonoBehaviour
 
     void ObjectCreate()
     {
-        curUIObject = Instantiate(curObject.transform.gameObject, uiPoint.position, uiPoint.rotation);
-        curUIObject.AddComponent<ObjectRotate>();
-        
-        //if (curObject.CloseUpLayer >= 0)
-        //    curUIObject.layer = curObject.CloseUpLayer;
-        //else
-        //    Debug.LogError(curObject.name + "의 CloseUpLayer 테그가 현재 레이어 태그에 없습니다");
-        
-        
-        if (curUIObject.GetComponent<Rigidbody>())
-            curUIObject.GetComponent<Rigidbody>().useGravity = false;
+       
     }
 }
