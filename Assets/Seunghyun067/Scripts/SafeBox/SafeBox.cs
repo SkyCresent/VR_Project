@@ -29,6 +29,10 @@ public class SafeBox : SH.Interactionable
     {
 
         base.Awake();
+        Camera[] temps = FindObjectsOfType<Camera>();
+
+        foreach (var current in temps)
+            Debug.Log(current.name);
         foreach (var pass in passwordInput)
             resultPassword.Add(pass - '0');
 

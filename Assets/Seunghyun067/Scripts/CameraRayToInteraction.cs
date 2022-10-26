@@ -14,8 +14,8 @@ public class CameraRayToInteraction : MonoBehaviour
     
     [SerializeField] public Image imageA;
     [SerializeField] public Image imageX;
-    //[SerializeField] public Camera mainCam;
-    //[SerializeField] public Camera subCam;
+    [SerializeField] public Camera mainCam;
+    [SerializeField] public Camera subCam;
     [SerializeField] private Transform uiPoint;
 
     private HandObjectState curObjectState = HandObjectState.NON_OBJECT;
@@ -38,8 +38,8 @@ public class CameraRayToInteraction : MonoBehaviour
     {
         imageA.enabled = false;
         imageX.enabled = false;
-        //mainCam.enabled = true;
-        //subCam.enabled = false;
+        mainCam.enabled = true;
+        subCam.enabled = false;
 
         
     }
@@ -201,17 +201,30 @@ public class CameraRayToInteraction : MonoBehaviour
 
     public void MainView()
     {
-         //mainCam.enabled = false;
-         //subCam.enabled = true;
+         mainCam.enabled = false;
+         subCam.enabled = true;
     }
     public void SubView()
     {
-         //mainCam.enabled = true;
-         //subCam.enabled = false;
+         mainCam.enabled = true;
+         subCam.enabled = false;
     }
 
     void ObjectCreate()
     {
-       
+        Vector3 pos = subCam.transform.position;
+        Vector3 dir = subCam.transform.forward;
+        curUIObject = Instantiate(curObject.gameObject, uiPoint.position, uiPoint.rotation);
+        dir.y = 0;
+        pos += dir * 1f;
+ 
+        //if (curObject.CloseUpLayer >= 0)
+        //    curUIObject.layer = curObject.CloseUpLayer;
+        //else
+        //    Debug.LogError(curObject.name + "의 CloseUpLayer 테그가 현재 레이어 태그에 없습니다");
+        
+        
+        if (curUIObject.GetComponent<Rigidbody>())
+            curUIObject.GetComponent<Rigidbody>().useGravity = false;
     }
 }
