@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
-using UnityEngine.XR.Interaction.Toolkit;
+
 public enum SafeButtonType { NUMBER, ENTER, DELETE }
 
 [RequireComponent(typeof(Animator))]
@@ -17,7 +16,6 @@ public class SafeBox : SH.Interactionable
     [SerializeField] private GameObject open;
     [SerializeField] private GameObject close;
     [SerializeField] private Camera mainCam;
-
     private Camera safeCam;
 
     private List<int> resultPassword = new List<int>();
@@ -27,7 +25,7 @@ public class SafeBox : SH.Interactionable
 
     new private void Awake()
     {
-
+        
         base.Awake();
         foreach (var pass in passwordInput)
             resultPassword.Add(pass - '0');
@@ -49,17 +47,8 @@ public class SafeBox : SH.Interactionable
     }
     public override void Interaction()
     {
-        GimmickManager.Instance.LineOnOff(true);
-        GetComponent<BoxCollider>().enabled = false;
-        Debug.Log("금고시작");
-    }
-
-    public override void UnInteraction()
-    {
-        GimmickManager.Instance.LineOnOff(false);
-        GetComponent<BoxCollider>().enabled = true;
-        Debug.Log("금고끝");
-        GetComponent<Item>().DeleteOption(ItemOption.INTERACTION);
+        mainCam.enabled = false;
+        safeCam.enabled = true;
     }
 
     private void PrintPassword()
@@ -122,6 +111,7 @@ public class SafeBox : SH.Interactionable
     IEnumerator co()
     {
         yield return new WaitForSeconds(3f);
+        animator.SetBool("Open", false);
         foreach (var openRender in open.GetComponentsInChildren<Renderer>())
             openRender.material.color = Color.blue;
         foreach (var closeRender in close.GetComponentsInChildren<Renderer>())
@@ -149,48 +139,40 @@ public class SafeBox : SH.Interactionable
             pass.mesh = null;
     }
 
-    int keyCount = 0;
+    public override void UnInteraction()
+    {
+        mainCam.enabled = true;
+        safeCam.enabled = false;
+    }
 
     public override bool InteractionUpdate()
     {
-        RaycastHit hit;
-
-        bool isRay = Physics.Raycast(GimmickManager.Instance.controller.transform.position, GimmickManager.Instance.controller.transform.forward, out hit, 1); ;
-        if (!isRay)
-            return true;
-
-        if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Safe"))
+        if (Input.GetKeyDown(KeyCode.X))
             return false;
 
-        SafeButton button = hit.transform.GetComponent<SafeButton>();
-
-        if (null == button)
+        if (!Input.GetMouseButtonDown(0))
             return true;
 
-        if (!XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
+        RaycastHit hit;
+
+        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit, int.MaxValue, numberLayer))
         {
-            keyCount = 0;
-            return true;
-        }
+            SafeButton button = hit.transform.GetComponent<SafeButton>();
 
-        if (++keyCount != 1)
-            return true;
-      
-
-        switch (button.ButtonType)
-        {
-            case SafeButtonType.NUMBER:
-                Number(hit.transform.name[0] - '0');
-                break;
-            case SafeButtonType.ENTER:
-                Enter();
-                
-                return false;
-            case SafeButtonType.DELETE:
-                Delete();
-                break;
-            default:
-                break;
+            switch (button.ButtonType)
+            {
+                case SafeButtonType.NUMBER:
+                    Number(hit.transform.name[0] - '0');
+                    break;
+                case SafeButtonType.ENTER:
+                    Enter();
+                    break;
+                case SafeButtonType.DELETE:
+                    Delete();
+                    break;
+                default:
+                    break;
+            }
         }
         return true;
     }
