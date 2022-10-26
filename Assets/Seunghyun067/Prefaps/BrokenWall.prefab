@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 141734256978262447}
   - component: {fileID: 535185290698808375}
   - component: {fileID: 2313526384920472751}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 6006498350292767155}
   - component: {fileID: 5954525712823235269}
   - component: {fileID: 5205435458529007706}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 1664025553082028587}
   - component: {fileID: 3028812649012269534}
   - component: {fileID: 8012937605429225388}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell.001_cell.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 2373839290669863026}
   - component: {fileID: 1182874962629285206}
   - component: {fileID: 323290451705299491}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 3227557827646328911}
   - component: {fileID: 4398522093144380711}
   - component: {fileID: 2862743078518796590}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell.001_cell.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 7758251267423973515}
   - component: {fileID: 3260333593253718133}
   - component: {fileID: 4964996269772943529}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -852,7 +852,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.15, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8135819086044442625
 MonoBehaviour:
@@ -892,7 +892,7 @@ GameObject:
   - component: {fileID: 3391335960967436522}
   - component: {fileID: 584646593744029783}
   - component: {fileID: 205139612691155504}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell.001_cell.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1121,7 +1121,7 @@ GameObject:
   - component: {fileID: 8279834991386008692}
   - component: {fileID: 8279834991386008691}
   - component: {fileID: 8279834991386008690}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cube_cell.003_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1232,7 +1232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8279834991760847441}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}

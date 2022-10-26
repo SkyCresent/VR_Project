@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class GimmickManager : SH.Singleton<GimmickManager>
 {
-    [SerializeField] private Light roomLight;
+    [SerializeField] private Light[] roomLights;
+    [SerializeField] private Renderer[] lightRenderers;
     [SerializeField] private bool isTest;
-
+    [SerializeField] public GameObject controller;
 
     private bool isElecEnable = false;
     private bool isLightingEnable = false;
@@ -17,13 +18,22 @@ public class GimmickManager : SH.Singleton<GimmickManager>
     private string targetLayerName;
     public string TargetLayerName { get => targetLayerName; }
 
+    [SerializeField]
+    private GameObject line;
+
     private void Awake()
     {
+        line.SetActive(false);
         targetLayerName = "Item";
         if (!isTest)
         {
             targetLayerName = "LightItem";
-            roomLight.enabled = false;
+
+            for (int i = 0; i < roomLights.Length; i++)
+            {
+                roomLights[i].enabled = false;
+                lightRenderers[i].material.SetColor("_EmissionColor", Color.black);
+            }
         }        
     }
 
@@ -34,11 +44,16 @@ public class GimmickManager : SH.Singleton<GimmickManager>
         if (!isElecEnable)
             return false;
 
-        roomLight.enabled = true;
+        for (int i = 0; i < roomLights.Length; i++)
+        {
+            roomLights[i].enabled = true;
+            lightRenderers[i].material.SetColor("_EmissionColor", Color.white);
+        }
         isLightingEnable = true;
         targetLayerName = "Item";
         return true;
     }
 
+    public void LineOnOff(bool isEnable) => line.SetActive(isEnable);
 
 }
