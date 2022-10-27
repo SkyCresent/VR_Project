@@ -10,6 +10,7 @@ public class XRInput : SH.Singleton<XRInput>
     [SerializeField] XRController rightController;
 
     public XRController LeftController { get => leftController; }
+    public XRController RightController { get => rightController; }
 
     public bool GetKey(ControllerType type, InputFeatureUsage<bool> usage)
     {
@@ -20,5 +21,16 @@ public class XRInput : SH.Singleton<XRInput>
         }
 
         return false;
+    }
+
+    public Vector2 JoySick(ControllerType type)
+    {
+        XRController xrController = type == ControllerType.LEFT ? leftController : rightController;
+
+        if (LeftController.inputDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 position))
+        {
+            return position;
+        }
+        return Vector2.zero;
     }
 }

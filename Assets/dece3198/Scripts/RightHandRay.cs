@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class RightHandRay : MonoBehaviour
 {
+    [SerializeField] private GameObject point;
     [SerializeField]
     private XRController controller;
     [SerializeField]
@@ -13,15 +14,25 @@ public class RightHandRay : MonoBehaviour
     [SerializeField]
     private GameObject watchCanvas;
 
+    [SerializeField] LineRenderer line;
+
     private RaycastHit hitInfo;
     private bool isWtchUi = false;
     private bool isWatchCool = true;
 
     // Update is called once per frame
+    private void Awake()
+    {
+        watchCanvas.SetActive(false);
+    }
     void Update()
     {
-        if(Physics.Raycast(transform.position, transform.forward, out hitInfo, 1f, layerMask))
+        
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, 1f, layerMask))
         {
+            point.SetActive(true);
+            point.transform.position = hitInfo.point;
+            Debug.Log(hitInfo.transform.name);
             if(hitInfo.transform.GetComponent<Watch>() != null)
             {
                 if(controller.inputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out bool ButtonAX))
@@ -33,8 +44,10 @@ public class RightHandRay : MonoBehaviour
                 }
             }
         }
+        else
+        point.SetActive(false);
 
-        if(isWtchUi && isWatchCool)
+        if (isWtchUi && isWatchCool)
         {
             StartCoroutine(WatchUiCoolTime());
         }

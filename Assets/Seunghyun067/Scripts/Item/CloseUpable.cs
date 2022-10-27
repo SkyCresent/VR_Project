@@ -8,9 +8,12 @@ public class CloseUpable : ItemComponent, ICloseUp
     public int CloseUpLayer { get => LayerMask.NameToLayer(closeUpLayer); }
 
     private GameObject UIObject;
-    [SerializeField] private Vector3 positionOffset;
+    [SerializeField] private Vector3 positionOffset = Vector3.zero;
     [SerializeField] private Vector3 scale;
     [SerializeField] private float rotSpeed;
+
+    public float OffsetY { get => positionOffset.y; }
+    public float OffsetX { get => positionOffset.x; }
 
     protected void Awake()
     {
