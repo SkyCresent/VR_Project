@@ -41,6 +41,11 @@ public class RightHandRay : MonoBehaviour
 
     }
 
+    public void DisabledWatch()
+    {
+        watchCanvas.SetActive(false);
+    }
+
     IEnumerator WatchUiCoolTime()
     {
         watchCanvas.SetActive(true);
