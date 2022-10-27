@@ -26,15 +26,15 @@ TagManager:
   - Wall
   - BrokenWall
   - Safe
+  - SafeNumber
+  - Watch
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Pawn
+  - Chess
+  - Player
   - 
   - 
   - 

@@ -14,6 +14,12 @@ public class ObjectRotate : MonoBehaviour
             transform.Rotate(0f, -position.x * speed, 0f, Space.World);
             transform.Rotate(position.y * speed, 0f, 0f, Space.World);
         }
+
+        if (XRInput.Instance.RightController.inputDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 position2))
+        {
+            transform.Rotate(0f, -position2.x * speed, 0f, Space.World);
+            transform.Rotate(position2.y * speed, 0f, 0f, Space.World);
+        }
         // if (Input.GetMouseButton(0))
         // {
         //     transform.Rotate(0f, -Input.GetAxis("Mouse X") * speed, 0f, Space.World);

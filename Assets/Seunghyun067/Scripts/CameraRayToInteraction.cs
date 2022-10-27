@@ -11,7 +11,6 @@ public enum HandObjectState { NON_OBJECT, OBJECT }
 public class CameraRayToInteraction : MonoBehaviour
 {
     [SerializeField] private LineRenderer line;
-    [SerializeField] private GameObject controller;
     [SerializeField] public Image imageA;
     [SerializeField] public Image imageX;
     [SerializeField] public Image handImage;
@@ -34,7 +33,10 @@ public class CameraRayToInteraction : MonoBehaviour
 
     private GameObject curUIObject;
     private Item curObject;
-    RaycastHit hit;
+    private Item curHoverL;
+    private Item curHoverR;
+    RaycastHit hitL;
+    RaycastHit hitR;
     private void Awake()
     {
         imageA.enabled = false;
@@ -65,24 +67,26 @@ public class CameraRayToInteraction : MonoBehaviour
         //uiPoint.position = position + dir;
     }
 
-
     private void RaycastInteraction()
     {
         if (curObject)
             Debug.Log(curObject.name);
+
         // 레이는 항상 쏨.
-        Physics.Raycast(controller.transform.position, controller.transform.forward, out hit, 1);
+        Physics.Raycast(GimmickManager.Instance.LController.transform.position, GimmickManager.Instance.LController.transform.forward, out hitL, 1);
+        Physics.Raycast(GimmickManager.Instance.RController.transform.position, GimmickManager.Instance.RController.transform.forward, out hitR, 1);
 
-
-        line.SetPosition(0, controller.transform.position);
-        line.SetPosition(1, controller.transform.position + controller.transform.forward);
 
 
         // 타겟을 정해줌.
-        SetHoverObject();
+        SetHoverObjectL(hitL);
+        SetHoverObjectR(hitR);
+        //SetHoverObject(hitR, curHoverR);
 
         // 타겟의 상태에 따라 어떤 작업을 할건가 결정.
-        InteractionAndCloseUpKeyDown();
+        InteractionAndCloseUpKeyDown(ControllerType.LEFT, curHoverL);
+        InteractionAndCloseUpKeyDown(ControllerType.RIGHT, curHoverR);
+        //InteractionAndCloseUpKeyDown();
 
         // 타겟과의 상호작용.
         Interaction();
@@ -95,60 +99,94 @@ public class CameraRayToInteraction : MonoBehaviour
 
     }
 
-    void SetHoverObject()
+    void SetHoverObjectL(RaycastHit _hit)
     {
         // 상호작용 하지 않을 때만 타겟을 정해준다.  
         // 손에 오브젝트를 들고 있을 때도 타겟을 정해주지 않는다.
         if (isCloseUping || isInteracting || curObjectState == HandObjectState.OBJECT)
             return;
 
-        if (!hit.transform || hit.transform.gameObject.layer
+        if (!_hit.transform || _hit.transform.gameObject.layer
             != LayerMask.NameToLayer(GimmickManager.Instance.TargetLayerName))
         {
 
-            curObject?.GetItemComponent<Hoverable>().HoverOff();
-            curObject = null;
+            curHoverL?.GetItemComponent<Hoverable>().HoverOff();
+            curHoverL = null;
             return;
         }
 
         Item targetObject = null;
 
-        if (!(targetObject = hit.transform.GetComponent<Item>()))
+        if (!(targetObject = _hit.transform.GetComponent<Item>()))
             return;
 
         if (!targetObject.IsOption(ItemOption.HOVER))
             return;
 
 
-        if (targetObject == curObject)
+        if (targetObject == curHoverL)
             return;
 
-        curObject?.GetItemComponent<Hoverable>().HoverOff();
-        curObject = targetObject;
-        curObject?.GetItemComponent<Hoverable>().HoverOn();
+        curHoverL?.GetItemComponent<Hoverable>().HoverOff();
+        curHoverL = targetObject;
+        curHoverL?.GetItemComponent<Hoverable>().HoverOn();
     }
 
-    void InteractionAndCloseUpKeyDown()
+    void SetHoverObjectR(RaycastHit _hit)
     {
+        // 상호작용 하지 않을 때만 타겟을 정해준다.  
+        // 손에 오브젝트를 들고 있을 때도 타겟을 정해주지 않는다.
+        if (isCloseUping || isInteracting || curObjectState == HandObjectState.OBJECT)
+            return;
 
+        if (!_hit.transform || _hit.transform.gameObject.layer
+            != LayerMask.NameToLayer(GimmickManager.Instance.TargetLayerName))
+        {
+
+            curHoverR?.GetItemComponent<Hoverable>().HoverOff();
+            curHoverR = null;
+            return;
+        }
+
+        Item targetObject = null;
+
+        if (!(targetObject = _hit.transform.GetComponent<Item>()))
+            return;
+
+        if (!targetObject.IsOption(ItemOption.HOVER))
+            return;
+
+
+        if (targetObject == curHoverR)
+            return;
+
+        curHoverR?.GetItemComponent<Hoverable>().HoverOff();
+        curHoverR = targetObject;
+        curHoverR?.GetItemComponent<Hoverable>().HoverOn();
+    }
+
+    void InteractionAndCloseUpKeyDown(ControllerType type, Item curHover)
+    {
         if (isCloseUping)
             return;
-  
+
+        if (isInteracting)
+            return;
+
         // 타겟이 없거나 이미 상호작용 중이면 들어오지 않음.
-        if (!(imageA.enabled = (curObject || isCloseUping || isInteracting)))
+        if (!(imageA.enabled = curHover))
             return;
 
         // 클로즈업 가능한가?
-        imageA.enabled = curObject.IsOption(ItemOption.CLOSEUP);
+        imageA.enabled = curHover.IsOption(ItemOption.CLOSEUP);
 
-        if (curObject.IsOption(ItemOption.INTERACTION))
+        if (curHover.IsOption(ItemOption.INTERACTION))
             Debug.Log("Option");
 
-
-
         // 키를 눌러서 상호작용
-        if (curObject.IsOption(ItemOption.INTERACTION) && curObject && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
+        if (curHover.IsOption(ItemOption.INTERACTION) && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.primaryButton))
         {
+            curObject = curHover;
             Debug.Log("asd");
             curObject?.GetItemComponent<Hoverable>().HoverOff();
             curObject.GetItemComponent<SH.Interactionable>().Interaction();
@@ -156,8 +194,9 @@ public class CameraRayToInteraction : MonoBehaviour
         }
 
         // 키를 눌러서 클로즈업.
-        if (imageA.enabled == true && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton))
+        if (imageA.enabled == true && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.primaryButton))
         {
+            curObject = curHover;
             curObject?.GetItemComponent<Hoverable>().HoverOff();
             curObject.GetItemComponent<CloseUpable>().CloseUp();
             ObjectCreate();
@@ -176,7 +215,7 @@ public class CameraRayToInteraction : MonoBehaviour
             isInteracting = curObject.GetItemComponent<SH.Interactionable>().InteractionUpdate();
 
             // 내부에서 끝나거나 키를 누르면 상호작용 종료
-            if (!isInteracting || Input.GetKeyDown(KeyCode.X))
+            if (!isInteracting || XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.secondaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.secondaryButton))
             {
                 curObject.GetItemComponent<SH.Interactionable>().UnInteraction();
                 InteractionEnd();
@@ -189,7 +228,7 @@ public class CameraRayToInteraction : MonoBehaviour
             curObject.GetItemComponent<CloseUpable>().CloseUp();
 
             // X키를 누르면 클로즈업 종료.
-            if (XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.secondaryButton))
+            if (XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.secondaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.secondaryButton))
             {
                 curObject.GetItemComponent<CloseUpable>().UnCloseUp();
                 InteractionEnd();
@@ -227,14 +266,12 @@ public class CameraRayToInteraction : MonoBehaviour
 
     void ObjectCreate()
     {
+        Vector3 UiPos = uiPoint.position;
+        UiPos.x += curObject.GetItemComponent<CloseUpable>().OffsetX;
+        UiPos.y += curObject.GetItemComponent<CloseUpable>().OffsetY;
+
         curUIObject = Instantiate(curObject.transform.gameObject, uiPoint.position, uiPoint.rotation);
         curUIObject.AddComponent<ObjectRotate>();
-
-        //if (curObject.CloseUpLayer >= 0)
-        //    curUIObject.layer = curObject.CloseUpLayer;
-        //else
-        //    Debug.LogError(curObject.name + "의 CloseUpLayer 테그가 현재 레이어 태그에 없습니다");
-
 
         if (curUIObject.GetComponent<Rigidbody>())
             curUIObject.GetComponent<Rigidbody>().useGravity = false;
