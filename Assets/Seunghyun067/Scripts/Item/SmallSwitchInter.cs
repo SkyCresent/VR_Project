@@ -14,6 +14,7 @@ public class SmallSwitchInter : SH.Interactionable
     {
         if (isLightOn)
         {
+            Music.Instance.PlaySound("switch");
             Debug.Log("불이 들어왔습니다");
             GetComponent<Animator>().SetTrigger("SmallSwitchOn");
             owner.DeleteOption(ItemOption.INTERACTION);

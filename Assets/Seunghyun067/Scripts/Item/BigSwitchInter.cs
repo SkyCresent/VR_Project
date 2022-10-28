@@ -12,6 +12,7 @@ public class BigSwitchInter : SH.Interactionable
 
     public override void UnInteraction()
     {
+        Music.Instance.PlaySound("pull_the_lever");
         Debug.Log("전기가 들어왔습니다");
         GetComponent<Animator>().SetTrigger("SwitchOn");
         owner.DeleteOption(ItemOption.INTERACTION);
