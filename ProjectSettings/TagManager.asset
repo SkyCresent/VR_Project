@@ -28,7 +28,7 @@ TagManager:
   - Safe
   - SafeNumber
   - Watch
-  - 
+  - Hand
   - 
   - 
   - 
@@ -36,8 +36,8 @@ TagManager:
   - Chess
   - Player
   - 
-  - 
-  - 
+  - CamUI
+  - Key
   - 
   - 
   m_SortingLayers:

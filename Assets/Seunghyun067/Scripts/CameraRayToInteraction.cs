@@ -10,6 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public enum HandObjectState { NON_OBJECT, OBJECT }
 public class CameraRayToInteraction : MonoBehaviour
 {
+    [SerializeField] private GameObject move;
     [SerializeField] private LineRenderer line;
     [SerializeField] public Image imageA;
     [SerializeField] public Image imageX;
@@ -178,23 +179,12 @@ public class CameraRayToInteraction : MonoBehaviour
             return;
 
         // 클로즈업 가능한가?
-        imageA.enabled = curHover.IsOption(ItemOption.CLOSEUP);
+        //imageA.enabled = ;
 
         if (curHover.IsOption(ItemOption.INTERACTION))
             Debug.Log("Option");
 
-        // 키를 눌러서 상호작용
-        if (curHover.IsOption(ItemOption.INTERACTION) && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.primaryButton))
-        {
-            curObject = curHover;
-            Debug.Log("asd");
-            curObject?.GetItemComponent<Hoverable>().HoverOff();
-            curObject.GetItemComponent<SH.Interactionable>().Interaction();
-            isInteracting = true;
-        }
-
-        // 키를 눌러서 클로즈업.
-        if (imageA.enabled == true && XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.primaryButton))
+        if (curHover.IsOption(ItemOption.CLOSEUP) == true && (XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.primaryButton)))
         {
             curObject = curHover;
             curObject?.GetItemComponent<Hoverable>().HoverOff();
@@ -204,7 +194,21 @@ public class CameraRayToInteraction : MonoBehaviour
             imageA.enabled = false;
             imageX.enabled = true;
             isCloseUping = true;
+            move.SetActive(false);
         }
+
+        // 키를 눌러서 상호작용
+        else if (curHover.IsOption(ItemOption.INTERACTION) && (XRInput.Instance.GetKey(ControllerType.LEFT, CommonUsages.primaryButton) || XRInput.Instance.GetKey(ControllerType.RIGHT, CommonUsages.primaryButton)))
+        {
+            curObject = curHover;
+            Debug.Log("asd");
+            curObject?.GetItemComponent<Hoverable>().HoverOff();
+            curObject.GetItemComponent<SH.Interactionable>().Interaction();
+            isInteracting = true;
+        }
+
+        // 키를 눌러서 클로즈업.
+        
     }
 
     void Interaction()
@@ -233,6 +237,7 @@ public class CameraRayToInteraction : MonoBehaviour
                 curObject.GetItemComponent<CloseUpable>().UnCloseUp();
                 InteractionEnd();
                 isCloseUping = false;
+                move.SetActive(true);
             }
         }
     }

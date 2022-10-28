@@ -48,8 +48,12 @@ namespace SH
                 GameObject spawnedHand = Instantiate(handPrefab, transform);
                 _handAnimator = spawnedHand.GetComponent<Animator>();
                 _handMesh = spawnedHand.GetComponentInChildren<SkinnedMeshRenderer>();
+
+
             }
         }
+
+
 
 
         // Update is called once per frame

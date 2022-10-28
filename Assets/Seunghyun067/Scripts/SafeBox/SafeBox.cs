@@ -72,13 +72,14 @@ public class SafeBox : MonoBehaviour
         {
             SetPassword();
             PrintPassword();
-
+            Music.Instance.PlaySound("error_sound");
             return;
         }
 
         curPassword.Add(number);
         NumberMeshUpdate();
         PrintPassword();
+        Music.Instance.PlaySound("input_password_sound(3)");
     }
 
     private void Enter()
@@ -87,6 +88,7 @@ public class SafeBox : MonoBehaviour
         {
             SetPassword();
             PrintPassword();
+            Music.Instance.PlaySound("error_sound");
             return;
         }
 
@@ -135,6 +137,7 @@ public class SafeBox : MonoBehaviour
         curPassword.Clear();
         foreach (var pass in passwordMesh)
             pass.mesh = null;
+        
     }
 
     int keyCount = 0;
@@ -169,8 +172,6 @@ public class SafeBox : MonoBehaviour
         Debug.Log(hit.transform.gameObject.name);
         if (null == button)
             return;
-
-        int curKeyCount;
 
         if (!XRInput.Instance.GetKey(type, CommonUsages.primaryButton))
         {

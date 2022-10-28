@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class BrokenWall : MonoBehaviour
 {
@@ -9,16 +11,24 @@ public class BrokenWall : MonoBehaviour
     [SerializeField] private GameObject wall;
     [SerializeField] private GameObject helpCube;
     [SerializeField] private GameObject planeX;
+    private XRGrabInteractable[] xrGraps;
     [SerializeField] private BoxCollider[] aroundWallColls;
     private int brokenWallIndex = 0;
 
     private void Awake()
     {
+        xrGraps = GetComponentsInChildren<XRGrabInteractable>();
+        foreach (var xrGrap in xrGraps)
+            xrGrap.enabled = false;
+
         foreach (var wall in browenWalls)
         {
             brownWallRigids.Add(wall.GetComponent<Rigidbody>());
             wall.transform.gameObject.SetActive(false);
         }
+
+        
+
     }
 
     private void Update()
@@ -35,6 +45,7 @@ public class BrokenWall : MonoBehaviour
             return;
 
         Hit();
+        Music.Instance.PlaySound("breaking-a-wall(1)");
     }
     public void Break()
     {
@@ -44,13 +55,20 @@ public class BrokenWall : MonoBehaviour
         planeX.SetActive(false);
         foreach (var rb in brownWallRigids)
             rb.isKinematic = false;
+
+        foreach (var xrGrap in xrGraps)
+            xrGrap.enabled = true;
+
+        
+        StartCoroutine(AroundWallOn());
     }
+
+
 
     IEnumerator AroundWallOn()
     {
-        yield return new WaitForSeconds(0.5f);
-        foreach (var coll in aroundWallColls)
-            coll.isTrigger = false;
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
     }
 
     private void Hit()

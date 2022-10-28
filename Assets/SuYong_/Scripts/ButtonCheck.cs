@@ -10,12 +10,15 @@ public class ButtonCheck : MonoBehaviour
 
     public void Checking()
     {
-        if(button != null)
+        if(button != null&& !isChecked)
         {
-            if (button[0].image.color == Color.red && button[1].image.color == Color.yellow
-                && button[2].image.color == Color.blue && button[3].image.color == Color.green)
+            if (button[0].image.color == Color.red && button[1].image.color == Color.blue
+                && button[2].image.color == Color.yellow && button[3].image.color == Color.green)
             {
                 isChecked = true;
+                GameManager.Instance.KeyOnAble();
+                GameManager.Instance.IsTimeGo = false;
+                
             }
             else
             {
