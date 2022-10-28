@@ -107,6 +107,9 @@ public class SafeBox : MonoBehaviour
         SetPassword();
         animator.SetBool("Open", true);
         StartCoroutine(co());
+        point.SetActive(false);
+        point2.SetActive(false);
+        ray = false;
     }
 
     IEnumerator co()
@@ -147,10 +150,14 @@ public class SafeBox : MonoBehaviour
     {
         Ray(ControllerType.LEFT);
         Ray(ControllerType.RIGHT);
-    }
 
+    }
+    bool ray = true;
     public void Ray(ControllerType type)
     {
+        if (!ray)
+            return;
+
         GameObject curController = type == ControllerType.LEFT ? GimmickManager.Instance.LController : GimmickManager.Instance.RController;
         GameObject curPoint = type == ControllerType.LEFT ? point : point2;
 
