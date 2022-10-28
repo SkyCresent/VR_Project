@@ -52,7 +52,7 @@ public class GameManager : SH.Singleton<GameManager>
 
     public void StartSound()
     {
-        Music.Instance.PlaySound("Sawlaughing");
+        Music.Instance.PlaySound("Start_Saw");
     }
     
 
@@ -150,7 +150,7 @@ public class GameManager : SH.Singleton<GameManager>
 
     public void Sawlaughing()
     {
-        Music.Instance.PlaySound("startSaw");
+        Music.Instance.PlaySound("Sawlaughing");
     }
 }
 

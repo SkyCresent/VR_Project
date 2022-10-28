@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CorrectChess : MonoBehaviour
 {
-    private void Awake()
-    {
-    }
+    private bool isOnable = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.name.Equals("CorrectPwan")) return;
-        GameManager.Instance.DiceOnAble();
+        if (!isOnable)
+        {
+            isOnable = true;
+            if (!other.name.Equals("CorrectPwan")) return;
+            GameManager.Instance.DiceOnAble();
+        }
     }
 }
